@@ -1,2 +1,5 @@
-# neo4j_issuu_data_analysis
-Importing a JSON data set from https://issuu.com to neo4j and perform queries 
+# Getting Started with Data Analysis using Neo4j 
+
++ Author: Arjun Rajeev Nedungadi (@arjuntherajeev)
++ Field: Data Analysis/Graph Databases
++ Topic: Importing & Performing Queries on a JSON Data Set from [issuu.com](https://issuu.com) using Neo4j
