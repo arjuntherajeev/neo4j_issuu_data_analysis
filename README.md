@@ -80,17 +80,15 @@ As an example, if we consider a Visitor __Thomas__ and a Document __A Diary of J
 + `pagereadtime`
 + `continuation_load`
 
-Creating a Relationship for each _type_ is not good practice and might create confusion within the graph. Hence, we add the _type_ as a property. Now, the Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
+Creating a Relationship for each _type_ is not good practice and might create confusion within the Graph. Hence, we add the _type_ as a property. Now, the Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
 
 ## 3. Importing the JSON Data Set <a id="chapter-3"></a>
 
 Let's get our hands dirty! 
 
-Assuming that Neo4j is started (with an appropriate `Database Location` selected), we should first see an empty graph. This means that there are __no__ Nodes (and Relationships)! 
-Our goal is to define a structure (or _skeleton_) for the graph which will help us populate the graph with the data from the data set. 
+Assuming that Neo4j is started (with an appropriate `Database Location` selected), we should first see an empty Graph. This means that there are __no__ Nodes (and Relationships). Our goal is to populate the Graph with the data from the JSON data set by defining its skeleton (Nodes and Relationships). 
 
-As expressed in [Chapter 2](#chapter-2)
-
+As described in [Chapter 2](#chapter-2), we have 2 Nodes and 1 Relationship within the Graph.
 `
 WITH "https://raw.githubusercontent.com/arjuntherajeev/neo4j_issuu_data_analysis/master/issuu_cw2.json" AS url
 CALL apoc.load.json(url) YIELD value
