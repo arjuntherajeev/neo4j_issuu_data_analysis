@@ -105,18 +105,55 @@ Now, `value` contains our _data_ which we need to utilize to create the Nodes an
 
 To do this, we can use the `UNWIND` keyword in Neo4j. In a nutshell, `UNWIND` will expand a list into a sequence of rows (More information about `UNWIND` is available [here](https://neo4j.com/docs/developer-manual/current/cypher/clauses/unwind/)). At this stage, we are required to possess an understanding of the _structure_ of the JSON data. As mentioned in [Chapter 1](#chapter-1), we can access the entries using the key `items`. 
 
-This is illustrated as: `UNWIND value.items AS item`
+This is illustrated as: 
+```
+UNWIND value.items AS item
+```
 
-At this stage, it is pertinent to know that `item` 
+At this stage, we have access to a single row via `item`. Now, we can use the API to access the values! 
 
-As described in [Chapter 2](#chapter-2), we have 2 Nodes and 1 Relationship within the Graph.
-`
+In Neo4j, the `WITH` clause allows using the output of a sub-query with following sub-query parts (More information about `WITH` is available [here](http://neo4j.com/docs/developer-manual/current/cypher/clauses/with/)).
+
+From our data, we are concerned about Documents from the [issuu.com](https://issuu.com) "Reader" software. We uniquely identify these Documents using the `env_doc_id` attribute. However, it is to be noted that not all Documents have the `env_doc_id` attribute. Thus, we are required to explicity select those entries which possess the attribute. The following code snippet illustrates this: 
+
+```
+WITH item
+WHERE NOT item.env_doc_id IS NULL
+```
+
+> Notice how we access the value using `item.env_doc_id`. This style of retrieving the value makes working with `JSON` data on Neo4j a smooth experience!
+
+Now that we have access to the values of _each_ entry, it is time to creates the Nodes and Relationships. This is accomplished using the `MERGE` keyword in Neo4j. It is _crucial_ to know the difference between `CREATE` and `MERGE`. As an example: 
+
+If we execute the following statements (in order):
+```
+CREATE (d:Document {id:1}) RETURN (d) 
+CREATE (d:Document {id:1}) RETURN (d)
+```
+This will result in __2 Nodes__ being created! A way to control this is by using `MERGE` which will create the Node __only__ if it does not exist. This can illustrated as follows:
+```
+MERGE (d:Document {id:1}) RETURN (d)
+```
+
+This same principle can be applied for Relationships as well! 
+
+Hence, the final __Cypher__ query consisting of all the above components will look like:
+```
 WITH "https://raw.githubusercontent.com/arjuntherajeev/neo4j_issuu_data_analysis/master/issuu_cw2.json" AS url
-CALL apoc.load.json(url) YIELD value
+CALL apoc.load.json(url) 
+YIELD value
 UNWIND value.items AS item
 WITH item
 WHERE NOT item.env_doc_id IS NULL
 MERGE (document:Document {doc_uuid:item.env_doc_id})
 MERGE (visitor:Visitor {visitor_uuid:item.visitor_uuid})
 MERGE (visitor)-[:VIEWED{activity:item.event_type}]->(document)
-`
+```
+
+If we run this query verbatim on Neo4j, the output should be (similar to):
+```
+Added 2293 labels, created 2293 nodes, set 4464 properties, created 2171 relationships, statement executed in 29831 ms.
+```
+
+__Remainder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is ensure that the `apoc.load.json` procedure is available for use!__
+
