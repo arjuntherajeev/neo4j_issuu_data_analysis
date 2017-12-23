@@ -220,7 +220,7 @@ We need to ask our Graph _questions_. These questions need to be translated to _
 
 ### Query 1. Find the count of visitors from each country and display them in the _descending_ order of count. 
 ```
-MATCH (v:Visitor) RETURN v.country AS Country, count(v) AS Count ORDER BY count(v) DESC LIMIT 10
+MATCH (v:Visitor) RETURN v.visitor_country AS Country, count(v) AS Count ORDER BY count(v) DESC LIMIT 10
 ```
 __Result:__
 ```
