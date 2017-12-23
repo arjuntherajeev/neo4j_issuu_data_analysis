@@ -220,7 +220,10 @@ We need to ask our Graph _questions_. These questions need to be translated to _
 
 ### Query 1. Find the count of visitors from each country and display them in the _descending_ order of count. 
 ```
-MATCH (v:Visitor) RETURN v.visitor_country AS Country, count(v) AS Count ORDER BY count(v) DESC LIMIT 10
+MATCH (v:Visitor) 
+RETURN v.visitor_country AS Country, count(v) AS Count 
+ORDER BY count(v) DESC 
+LIMIT 10
 ```
 __Result:__
 ```
@@ -250,6 +253,31 @@ __Result:__
 ```
 __Discussion:__
 
-This query simply performs a _group by_ operation where we are grouping Visitor Nodes based on the `visitor_country` property. The count is computed using the `count()` aggregate function. We sort the results in the descending order using the `ORDER BY <column> DESC` clause in Neo4j.
+This query simply performs a internal _group by_ operation where Visitor Nodes are grouped based on the `visitor_country` property. The count is computed using the `count()` aggregate function. We sort the results in the descending order using the `ORDER BY <column> DESC` clause in Neo4j.
 
-### Query 2. For a given Document UUID, find the number of visitors from each country.
+### Query 2. For a given Document UUID, find the number of visitors from each country. (Example Document UUID = 140228101942-d4c9bd33cc299cc53d584ca1a4bf15d9)
+```
+MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
+WHERE d.doc_uuid='140228101942-d4c9bd33cc299cc53d584ca1a4bf15d9'
+RETURN v.visitor_country AS Country, count(v.visitor_country) AS Count 
+ORDER BY count(v.visitor_country) DESC
+```
+__Result:__
+```
+╒═══════╤═════╕
+│Country│Count│
+╞═══════╪═════╡
+│GY     │15   │
+├───────┼─────┤
+│CA     │12   │
+├───────┼─────┤
+│US     │11   │
+├───────┼─────┤
+│CW     │1    │
+├───────┼─────┤
+│BB     │1    │
+└───────┴─────┘
+```
+__Discussion:__
+
+This 
