@@ -210,3 +210,10 @@ We can confirm the existence of the Indexes using `CALL db.indexes` which should
 └──────────────────────────────┴──────┴───────────────────┘
 ```
 
+## 5. Let's Query <a id="chapter-5"></a>
+
+Finally, we can derive insights from our data! 
+
+We need to ask our Graph _questions_. These questions need to be translated to __Cypher__ queries which will return the appropriate results. Let us answer some basic and advanced questions about the data set:
+
+### 5.1. Answer
