@@ -123,7 +123,7 @@ WHERE NOT item.env_doc_id IS NULL
 
 > Notice how we access the value using `item.env_doc_id`. This style of retrieving the value makes working with `JSON` data on Neo4j a smooth experience!
 
-Now that we have access to the values of _each_ entry, it is time to creates the Nodes and Relationships. This is accomplished using the `MERGE` keyword in Neo4j. It is _crucial_ to know the difference between `CREATE` and `MERGE`. As an example: 
+Now that we have access to the values of _each_ entry, it is time to create the Nodes and Relationships. This is accomplished using the `MERGE` keyword in Neo4j. It is _crucial_ to know the difference between `CREATE` and `MERGE`. As an example: 
 
 If we execute the following statements (in order):
 ```
