@@ -249,6 +249,7 @@ __Result:__
 └───────┴─────┘
 ```
 __Discussion:__
+
 This query simply performs a _group by_ operation where we are grouping Visitor Nodes based on the `visitor_country` property. The count is computed using the `count()` aggregate function. We sort the results in the descending order using the `ORDER BY <column> DESC` clause in Neo4j.
 
-### Query 2. 
+### Query 2. For a given Document UUID, find the number of visitors from each country.
