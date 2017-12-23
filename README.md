@@ -216,7 +216,7 @@ Finally, we can derive insights from our data!
 
 We need to ask our Graph _questions_. These questions need to be translated to __Cypher__ queries which will return the appropriate results. Let us answer some basic and advanced questions about the data set:
 
-> For the sake of this tutorial, we will only display the __top 10__ results for queries with a large number of rows. This is achieved by using the `LIMIT 10` constraint in our __Cypher__ query. 
+__Note: For the purpose of this tutorial, we will only display the top 10 results for queries with a large number of rows. This is achieved by using the `LIMIT 10` constraint.__
 
 ### Query 1. Find the count of visitors from each country and display them in the _descending_ order of count. 
 ```
@@ -253,9 +253,9 @@ __Result:__
 ```
 __Discussion:__
 
-This query simply performs a internal _group by_ operation where Visitor Nodes are grouped based on the `visitor_country` property. The count is computed using the `count()` aggregate function. We sort the results in the descending order using the `ORDER BY <column> DESC` clause in Neo4j.
+This query simply performs an internal _group by_ operation where Visitor Nodes are grouped based on the `visitor_country` property. The count is computed using the `count()` aggregate function. We sort the results in the descending order using the `ORDER BY <column> DESC` clause in Neo4j.
 
-### Query 2. For a given Document UUID, find the number of visitors from each country. (Example Document UUID = 140228101942-d4c9bd33cc299cc53d584ca1a4bf15d9)
+### Query 2. For a given Document UUID, find the number of visitors from each country. (Example Document UUID = `140228101942-d4c9bd33cc299cc53d584ca1a4bf15d9`)
 ```
 MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
 WHERE d.doc_uuid='140228101942-d4c9bd33cc299cc53d584ca1a4bf15d9'
