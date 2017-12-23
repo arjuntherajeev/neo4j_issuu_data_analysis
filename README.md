@@ -153,7 +153,6 @@ MERGE (visitor)-[:VIEWED{activity:item.event_type}]->(document)
 If we run this query verbatim on Neo4j, the output should be (similar to):
 ```
 Added 2294 labels, created 2294 nodes, set 5752 properties, created 2171 relationships, statement executed in 12230 ms.
-
 ```
 
 __Remainder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is ensure that the `apoc.load.json` procedure is available for use!__
@@ -217,4 +216,39 @@ Finally, we can derive insights from our data!
 
 We need to ask our Graph _questions_. These questions need to be translated to __Cypher__ queries which will return the appropriate results. Let us answer some basic and advanced questions about the data set:
 
-### 5.1. Answer
+> For the sake of this tutorial, we will only display the __top 10__ results for queries with a large number of rows. This is achieved by using the `LIMIT 10` constraint in our __Cypher__ query. 
+
+### Query 1. Find the count of visitors from each country and display them in the _descending_ order of count. 
+```
+MATCH (v:Visitor) RETURN v.country AS Country, count(v) AS Count ORDER BY count(v) DESC LIMIT 10
+```
+__Result:__
+```
+╒═══════╤═════╕
+│Country│Count│
+╞═══════╪═════╡
+│US     │312  │
+├───────┼─────┤
+│BR     │143  │
+├───────┼─────┤
+│MX     │136  │
+├───────┼─────┤
+│PE     │47   │
+├───────┼─────┤
+│CA     │46   │
+├───────┼─────┤
+│ES     │43   │
+├───────┼─────┤
+│GB     │36   │
+├───────┼─────┤
+│AR     │35   │
+├───────┼─────┤
+│FR     │34   │
+├───────┼─────┤
+│CO     │32   │
+└───────┴─────┘
+```
+__Discussion:__
+This query simply performs a _group by_ operation where we are grouping Visitor Nodes based on the `visitor_country` property. The count is computed using the `count()` aggregate function. We sort the results in the descending order using the `ORDER BY <column> DESC` clause in Neo4j.
+
+### Query 2. 
