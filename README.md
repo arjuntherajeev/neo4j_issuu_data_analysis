@@ -157,6 +157,9 @@ Added 2293 labels, created 2293 nodes, set 4464 properties, created 2171 relatio
 
 __Remainder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is ensure that the `apoc.load.json` procedure is available for use!__
 
-To check whether the Graph was populated successfully, we can run the __Cypher__ query: `MATCH (n) RETURN (n) LIMIT 25` which will only display the top 25 results. The output can be visualized as follows:
+To check whether the Graph was populated successfully, we can run the __Cypher__ query: `MATCH (n) RETURN (n) LIMIT 25` which will only display the top 25 results. 
 
+The output can be visualized as follows:
 <img src="https://raw.githubusercontent.com/arjuntherajeev/neo4j_issuu_data_analysis/master/graph_image.svg?sanitize=true">
+
+## 4. Creating Indexes <a id="chapter-4"></a>
