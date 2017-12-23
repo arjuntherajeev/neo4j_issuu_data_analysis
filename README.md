@@ -146,13 +146,14 @@ UNWIND value.items AS item
 WITH item
 WHERE NOT item.env_doc_id IS NULL
 MERGE (document:Document {doc_uuid:item.env_doc_id})
-MERGE (visitor:Visitor {visitor_uuid:item.visitor_uuid})
+MERGE (visitor:Visitor {visitor_uuid:item.visitor_uuid, visitor_country:item.visitor_country})
 MERGE (visitor)-[:VIEWED{activity:item.event_type}]->(document)
 ```
 
 If we run this query verbatim on Neo4j, the output should be (similar to):
 ```
-Added 2293 labels, created 2293 nodes, set 4464 properties, created 2171 relationships, statement executed in 29831 ms.
+Added 2294 labels, created 2294 nodes, set 5752 properties, created 2171 relationships, statement executed in 12230 ms.
+
 ```
 
 __Remainder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is ensure that the `apoc.load.json` procedure is available for use!__
