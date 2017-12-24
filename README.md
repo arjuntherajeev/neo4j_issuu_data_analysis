@@ -147,7 +147,7 @@ WITH item
 WHERE NOT item.env_doc_id IS NULL
 MERGE (document:Document {doc_uuid:item.env_doc_id})
 MERGE (visitor:Visitor {visitor_uuid:item.visitor_uuid, visitor_country:item.visitor_country})
-MERGE (visitor)-[:VIEWED{activity:item.event_type}]->(document)
+MERGE (visitor)-[:VIEWED{type:item.event_type}]->(document)
 ```
 
 If we run this query verbatim on Neo4j, the output should be (similar to):
@@ -218,7 +218,7 @@ We need to ask our Graph _questions_. These questions need to be translated to _
 
 __Note: For the purpose of this tutorial, we will only display the top 10 results for queries with a large number of rows. This is achieved by using the `LIMIT 10` constraint.__
 
-### Query 1. Find the count of visitors from each country and display them in the _descending_ order of count. 
+### Query 1. Find the number of visitors from each country and display them in the _descending_ order of count. 
 ```
 MATCH (v:Visitor) 
 RETURN v.visitor_country AS Country, count(v) AS Count 
@@ -280,4 +280,36 @@ __Result:__
 ```
 __Discussion:__
 
-This 
+This query is very similar to the one above. Here, we perform an internal _group by_ operation to group the Visitor Nodes based on the `visitor_country` property. However, this query differs from the previous one in the sense that we want to _filter_ the counts for a particular __Document UUID__. 
+
+In order to achieve this filteration, we need to utilise the Relationship within the Graph. Hence, we first `MATCH`, filter using the `WHERE` clause and then return the desired values. 
+
+__Tip: The relationship given here: `MATCH (d:Document)<-[:VIEWED]-(v:Visitor)` can also be written as `MATCH (v:Visitor)-[:VIEWED]->(d:Document)`.__
+
+### Query 3. Find the number of occurrences for each _type_ of viewership activity. 
+```
+MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)
+RETURN r.type AS Type, count(d.doc_uuid) AS Count
+ORDER BY Count ASC
+```
+__Result:__
+```
+╒════════════╤═════╕
+│Type        │Count│
+╞════════════╪═════╡
+│click       │1    │
+├────────────┼─────┤
+│read        │63   │
+├────────────┼─────┤
+│pageread    │369  │
+├────────────┼─────┤
+│pagereadtime│779  │
+├────────────┼─────┤
+│impression  │959  │
+└────────────┴─────┘
+```
+__Discussion:__
+
+This query also performs an internal _group by_ operation on the Relationship property `type`. An interesting aspect of this query is the `ORDER BY Count ASC`. Previously, we followed  the style of using `ORDER BY count(d.doc_uuid) ASC`. However, once we add a _column name_ such as `Count`, we can use that in subsequent parts of the query. 
+
+Hence, `ORDER BY count(d.doc_uuid) ASC` can also be written as `ORDER BY Count ASC`.
