@@ -314,7 +314,10 @@ This query also performs an internal _group by_ operation on the Relationship pr
 
 Hence, `ORDER BY count(d.doc_uuid) ASC` can also be written as `ORDER BY Count ASC`.
 
-### Query 4. For a given document, find other documents _like_ the one given. (This is also known as the _also-likes functionality_).
+### Query 4. Find the visitors for each document and display them in the _descending_ order of number of visitors.
+
+
+### Query 5. For a given document, find other documents _like_ the one given. (This is also known as the _also-likes functionality_).
 ```
 
 ```
