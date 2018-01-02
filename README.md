@@ -310,7 +310,7 @@ __Result:__
 ```
 __Discussion:__
 
-This query also performs an internal _group by_ operation on the Relationship property `type`. An interesting aspect of this query is the `ORDER BY Count ASC`. Previously, we followed  the style of using `ORDER BY count(d.doc_uuid) ASC`. However, once we add a _column name_ such as `Count`, we can use that in subsequent parts of the query. 
+This query also performs an internal _group by_ operation on the Relationship property `type`. An interesting aspect of this query is the `ORDER BY Count ASC`. Previously, we followed the style of using `ORDER BY count(d.doc_uuid) ASC`. However, once we add a _column name_ such as `Count`, we can use that in subsequent parts of the query. 
 
 Hence, `ORDER BY count(d.doc_uuid) ASC` can also be written as `ORDER BY Count ASC`.
 
@@ -376,6 +376,10 @@ __Result:__
 │                              │573efad29f6]                  │     │
 └──────────────────────────────┴──────────────────────────────┴─────┘
 ```
+__Discussion:__
+
+This query utilizes the `collect()` aggregate function which groups multiple records into a _list_. An important consideration made here is the use of the `DISTINCT` operator to ensure that _duplicate_ values are omitted from the output. Finally, we display the _top 3_ using the `LIMIT 3` constraint. 
+
 ### Query 5. For a given document, find other documents _like_ the one given. (This is also known as the _also-likes functionality_).
 ```
 
