@@ -314,8 +314,99 @@ This query also performs an internal _group by_ operation on the Relationship pr
 
 Hence, `ORDER BY count(d.doc_uuid) ASC` can also be written as `ORDER BY Count ASC`.
 
-### Query 4. Find the visitors for each document and display them in the _descending_ order of number of visitors.
-
+### Query 4. Find the visitors for each document and display the top 3 in the _descending_ order of number of visitors.
+'''
+MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)
+RETURN DISTINCT d.doc_uuid AS DocUUID, collect(v.visitor_uuid) AS Collect, count(v.visitor_uuid) AS Count
+ORDER BY Count DESC
+LIMIT 3
+'''
+__Result:__
+```
+╒══════════════════════════════╤══════════════════════════════╤═════╕
+│DocUUID                       │Collect                       │Count│
+╞══════════════════════════════╪══════════════════════════════╪═════╡
+│140228202800-6ef39a241f35301a9│[43b59d36985d8223, 43b59d36985│59   │
+│a42cd0ed21e5fb0               │d8223, 43b59d36985d8223, 35536│     │
+│                              │1a351094143, 51fd872df55686a5,│     │
+│                              │ 51fd872df55686a5, 51fd872df55│     │
+│                              │686a5, 4e2a75f30e6b4ce7, 6229c│     │
+│                              │ca3564cb1d1, 52873ed85700e41f,│     │
+│                              │ 2f63e0cca690da91, 2f63e0cca69│     │
+│                              │0da91, febc786c33113a8e, 47d26│     │
+│                              │08ec1f9127b, ca8079a4aaff28cb,│     │
+│                              │ e8fa4a9e63248deb, b6169f1bebb│     │
+│                              │be3ad, b3ded380cc8fdd24, ca807│     │
+│                              │9a4aaff28cb, 2f63e0cca690da91,│     │
+│                              │ 2f63e0cca690da91, ca8079a4aaf│     │
+│                              │f28cb, 52873ed85700e41f, 52873│     │
+│                              │ed85700e41f, b6169f1bebbbe3ad,│     │
+│                              │ b6169f1bebbbe3ad, 17db86d2605│     │
+│                              │43ddd, b2a24f14bb5c9ea3, b2a24│     │
+│                              │f14bb5c9ea3, fabc9339a406616d,│     │
+│                              │ fabc9339a406616d, fabc9339a40│     │
+│                              │6616d, 32563acf872f5449, febc7│     │
+│                              │86c33113a8e, febc786c33113a8e,│     │
+│                              │ 280bd96790ade2d4, 2f21ee71e0c│     │
+│                              │6a2ce, 458999cbf4307f34, 55ac6│     │
+│                              │c3ce6325228, 55ac6c3ce6325228,│     │
+│                              │ 55ac6c3ce6325228, 2f21ee71e0c│     │
+│                              │6a2ce, 2f21ee71e0c6a2ce, e8fa4│     │
+│                              │a9e63248deb, e8fa4a9e63248deb,│     │
+│                              │ b2a24f14bb5c9ea3, 6d3b99b2041│     │
+│                              │af286, b2a24f14bb5c9ea3, 36a12│     │
+│                              │501ee94d15c, d2d6e7d1a25ee0b0,│     │
+│                              │ 36a12501ee94d15c, 36a12501ee9│     │
+│                              │4d15c, d2d6e7d1a25ee0b0, d2d6e│     │
+│                              │7d1a25ee0b0, 13ca53a93b1594bf,│     │
+│                              │ 6229cca3564cb1d1, 47d2608ec1f│     │
+│                              │9127b, 47d2608ec1f9127b, 4e2a7│     │
+│                              │5f30e6b4ce7]                  │     │
+├──────────────────────────────┼──────────────────────────────┼─────┤
+│140228101942-d4c9bd33cc299cc53│[ba76461cdd66d337, fa3810e505f│40   │
+│d584ca1a4bf15d9               │4f792, d5ed3cfc4a454fe9, d5ed3│     │
+│                              │cfc4a454fe9, d5ed3cfc4a454fe9,│     │
+│                              │ 2d41536695cc4814, 2d41536695c│     │
+│                              │c4814, 67c698e88b4fbdcc, 78deb│     │
+│                              │8ffdb03d406, 78deb8ffdb03d406,│     │
+│                              │ ee42ba15ed8618eb, ee42ba15ed8│     │
+│                              │618eb, 688eb0dcd6ad8c86, 688eb│     │
+│                              │0dcd6ad8c86, c97c383d774deae0,│     │
+│                              │ 688eb0dcd6ad8c86, ee42ba15ed8│     │
+│                              │618eb, 9b2cb60327cb7736, 9b2cb│     │
+│                              │60327cb7736, 2d41536695cc4814,│     │
+│                              │ 06d465bfb51b0736, a96854d2178│     │
+│                              │0c1f9, a96854d21780c1f9, d1c98│     │
+│                              │b02398e9677, 1435542d699350d9,│     │
+│                              │ a8cf3c4f1449cc5d, b1cdbeca3a5│     │
+│                              │56b72, b1cdbeca3a556b72, 08c06│     │
+│                              │9dc405cad2e, 5b2baf0329663564,│     │
+│                              │ 0d47795fb1ddba9d, 667283570b5│     │
+│                              │cedfe, 6c661964d1d13c61, 78deb│     │
+│                              │8ffdb03d406, f5986e1cb02378e4,│     │
+│                              │ b1cdbeca3a556b72, 0e8ddc2d2a6│     │
+│                              │0e14f, a96854d21780c1f9, 9b2cb│     │
+│                              │60327cb7736, 6823c573efad29f6]│     │
+├──────────────────────────────┼──────────────────────────────┼─────┤
+│140224101516-e5c074c3404177518│[923f25aa749f67f6, 4f4bd7a35b2│26   │
+│bab9d7a65fb578e               │0bd1f, 19f5285fef7c1f00, f102d│     │
+│                              │9d4fc4bacdc, 3819fc022d225057,│     │
+│                              │ abefb3fe7784f8d3, e5d957682bc│     │
+│                              │8273b, 4d49271019c7ed96, 6b2d3│     │
+│                              │cca6c1f8595, 78e1a8af51d44194,│     │
+│                              │ b0ba142cdbf01b11, 0930437b533│     │
+│                              │a0031, d6b90f07f29781e0, 7bd81│     │
+│                              │3cddec2f1b7, e1bfcb29e0f3664a,│     │
+│                              │ 3db0cb8f357dcc71, 6d87bcdc5fa│     │
+│                              │5865a, 6170372b90397fb3, 3ec46│     │
+│                              │5aa8f36302b, 43dd7a8b2fafe059,│     │
+│                              │ 797846998c5624ca, ee14da6b126│     │
+│                              │3a51e, e3392e4a18d3370e, 23f8a│     │
+│                              │503291a948d, 502ddaaa898e57c4,│     │
+│                              │ 6fd040328d2ad46f]            │     │
+└──────────────────────────────┴──────────────────────────────┴─────┘
+```
+__Discussion:__
 
 ### Query 5. For a given document, find other documents _like_ the one given. (This is also known as the _also-likes functionality_).
 ```
