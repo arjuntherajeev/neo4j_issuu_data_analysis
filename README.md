@@ -23,7 +23,7 @@ We will use the Neo4j __Web Interface__ which provides a _user-friendly_ UI to v
 
 The next step is to acquire and understand the data set!
 
-## 1. The Data Set <a id="chapter-1"></a>
+## 1. The Data Set <a id="chapter-1"></a> 
 
 The data set that we will analyze comes from [issuu.com](https://issuu.com) - an online repository for magazines, catalogs, newspapers, and other publications. They published the [__Issuu Research Dataset__](http://labs.issuu.com/dataset_spec.html) with a treasure of data about documents and visitors. The data set is completely anonymised and provides an insight into the usage of the website. 
 
