@@ -155,7 +155,7 @@ If we run this query verbatim on Neo4j, the output should be (similar to):
 Added 2294 labels, created 2294 nodes, set 5752 properties, created 2171 relationships, statement executed in 12230 ms.
 ```
 
-__Reminder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is ensure that the `apoc.load.json` procedure is available for use!__
+__Reminder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is to ensure that the `apoc.load.json` procedure is available for use!__
 
 To check whether the Graph was populated successfully, we can run the __Cypher__ query: `MATCH (n) RETURN (n) LIMIT 25` which will only display the top 25 results. 
 
@@ -380,5 +380,9 @@ __Discussion:__
 
 This query utilizes the `collect()` aggregate function which groups multiple records into a _list_. An important consideration made here is the use of the `DISTINCT` operator to ensure that _duplicate_ values are omitted from the output. Finally, we display the _top 3_ using the `LIMIT 3` constraint. 
 
-## A Conclusion <a id="chapter-6"></a>
+## Summary <a id="chapter-6"></a>
+
+There you go, ladies & gentlemen! 
+
+In this tutorial, we learnt how to 
 
