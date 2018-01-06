@@ -384,5 +384,13 @@ This query utilizes the `collect()` aggregate function which groups multiple rec
 
 There you go, ladies & gentlemen! 
 
-In this tutorial, we learnt how to 
+In this tutorial, we saw an example of performing Data Analysis using Neo4j. We examined the [__Issuu Research Dataset__](http://labs.issuu.com/dataset_spec.html) and elaborated on its structure, format and fields. Next, we formulated the _model/schema_ of our desired Graph by choosing appropriate Nodes, Relationships and Properties. After this, we discussed how to import the raw `JSON` data set, parse it and populate our Graph by following the previously determined schema. Once the data set was correctly imported into Neo4j, we created Indexes to improve the performance of _querying_. Lastly, we saw some sample __Cypher__ queries which helped us derive insight from our vast data set! 
+
+## What's Next? <a id="chapter-7"></a>
+
+The possibilities are endless! If you enjoyed this tutorial, then you can try to derive insights using another data set of your choice! While we chose to construct a rather simple Graph, you can make it much more complex and detailed. Further to this, you can also explore and experiment with the various [APOC user defined procedures](https://neo4j-contrib.github.io/neo4j-apoc-procedures/) on the Graph! 
+
+## Note <a id="chapter-8"></a>
+
+If you have any other interesting Cypher queries that might be useful to readers, please feel free to create a new __Issue__ and include a short _description_ and the _query_ itself. 
 
