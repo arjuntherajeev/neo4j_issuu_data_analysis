@@ -380,7 +380,5 @@ __Discussion:__
 
 This query utilizes the `collect()` aggregate function which groups multiple records into a _list_. An important consideration made here is the use of the `DISTINCT` operator to ensure that _duplicate_ values are omitted from the output. Finally, we display the _top 3_ using the `LIMIT 3` constraint. 
 
-### Query 5. For a given document, find other documents _like_ the one given. (This is also known as the _also-likes functionality_).
-```
+## A Conclusion <a id="chapter-6"></a>
 
-```
