@@ -15,7 +15,6 @@ There are a plethora of tools, techniques and methods available to pursue Data A
 Readers are encouraged to read and possess a basic understanding about Neo4j and Graph Databases prior to starting this tutorial.
 I previously published a beginner's guide to Neo4j - [__Getting Started with Neo4j__](https://github.com/arjuntherajeev/neo4jStarterLesson) which introduces the concepts of Graph Databases and elaborates on how to perform basic CRUD (Create-Read-Update-Delete) operations using Neo4j. 
 
-
 ## Getting Set Up 
 
 The first thing we need to do is to [download](https://neo4j.com/download/community-edition/) and [install](https://neo4j.com/docs/operations-manual/current/installation/) Neo4j. 
@@ -82,7 +81,7 @@ As an example, if we consider a Visitor __Thomas__ and a Document __A Diary of J
 
 The Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
 
-## 3. Creating Indexes <a id="chapter-3"></a>
+## 3. Creating Constraints & Indexes <a id="chapter-3"></a>
 
 The main goal of this exercise is to _query_ the Graph to derive _insights_ about the data set. One way to improve the efficiency of retrieval of data is by using the concept of __Indexes__. The idea behind an Index here is the same as in __Relational__ and __NoSQL__ databases.
 
@@ -382,7 +381,7 @@ This query utilizes the `collect()` aggregate function which groups multiple rec
 
 There you go, ladies & gentlemen! 
 
-In this tutorial, we saw an example of performing Data Analysis using Neo4j. We examined the [__Issuu Research Dataset__](http://labs.issuu.com/dataset_spec.html) and elaborated on its structure, format and fields. Next, we formulated the _model/schema_ of our desired Graph by choosing appropriate Nodes, Relationships and Properties. After this, we discussed how to import the raw `JSON` data set, parse it and populate our Graph by following the previously determined schema. Once the data set was correctly imported into Neo4j, we created Indexes to improve the performance of _querying_. Lastly, we saw some sample __Cypher__ queries which helped us derive insight from our vast data set! 
+In this tutorial, we saw an example of performing Data Analysis using Neo4j. We examined the [__Issuu Research Dataset__](http://labs.issuu.com/dataset_spec.html) and elaborated on its structure, format and fields. Next, we formulated the _model/schema_ of our desired Graph by choosing appropriate Nodes, Relationships and Properties. Further, we created Constraints and Indexes in Neo4j to ensure uniqueness and improve the performance of _querying_. After this, we discussed how to import the raw `JSON` data set, parse it and populate our Graph by following the previously determined schema. Lastly, we saw some sample __Cypher__ queries which helped us derive insight from our vast data set! 
 
 ## References <a id="chapter-7"></a>
 
