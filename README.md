@@ -80,7 +80,7 @@ As an example, if we consider a Visitor __Thomas__ and a Document __A Diary of J
 + `pagereadtime`
 + `continuation_load`
 
-Creating a Relationship for each _type_ is not good practice and might create confusion within the Graph. Hence, we add the _type_ as a property. Now, the Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
+The Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
 
 ## 3. Importing the JSON Data Set <a id="chapter-3"></a>
 
