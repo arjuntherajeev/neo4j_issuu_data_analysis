@@ -53,8 +53,8 @@ From our data set, we can identify __2__ Nodes with the following properties:
 
 Node | Properties | 
 --- | --- |
-`Document` | `uuid` |
-`Visitor` | `uuid`, `country`|
+`Document` | `doc_uuid` |
+`Visitor` | `visitor_uuid`, `country`|
 
 > `uuid` stands for Universally Unique IDentifier.
 
@@ -83,6 +83,25 @@ The Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and spec
 
 ## 3. Creating Constraints & Indexes <a id="chapter-3"></a>
 
+A __Constraint__ is a mechanism to control and ensure _data integrity_ in Neo4j. Constraints can be created on either Nodes or Relationships. There are basically three types of Constraints in Neo4j: 
+1. Unique Node Property Constraints - to ensure that the Graph contains only a single Node with a specific Label and Property value.
+2. Node Property Existence Constraints - to ensure that a certain Property of a specific Label exists within all Nodes in the Graph.  
+3. Relationship Property Existence Constraints - to ensure that a certain Property exists within all Relationships of a specific structure.  
+4. Node Keys - to ensure that, for a given Label and set of Properties, there exists all those Properties for that Label and that the combination of Property values is unique. Essentially, a combination of _existence_ and _uniqueness_.
+
+__Tip: More information about Constraints in Neo4j is available [here](http://neo4j.com/docs/developer-manual/current/cypher/schema/constraints/).__
+
+We will create __Unique Node Property Constraints__ for our Graph as follows: 
+
+On the `Document` Label for the Property `doc_uuid`: 
+```
+CREATE CONSTRAINT ON (d:Document) ASSERT d.doc_uuid IS UNIQUE
+```
+On the `Visitor` Label for the Property `visitor_uuid`:
+```
+CREATE CONSTRAINT ON (v:Visitor) ASSERT v.visitor_uuid IS UNIQUE
+```
+
 The main goal of this exercise is to _query_ the Graph to derive _insights_ about the data set. One way to improve the efficiency of retrieval of data is by using the concept of __Indexes__. The idea behind an Index here is the same as in __Relational__ and __NoSQL__ databases.
 
 We can view existing Indexes in Neo4j using the query:
@@ -102,21 +121,14 @@ For the `Document` Label, we would like to create an Index on the __property__ `
 ```
 CREATE INDEX ON :Document(doc_uuid)
 ```
-It should return: 
-```
-Added 1 index, statement executed in 135 ms.
-```
 For the `Visitor` Label, we would like to create an Index on the __property__ `visitor_uuid` which is the unique identifier for each Visitor Node in the Graph. 
 ```
 CREATE INDEX ON :Visitor(visitor_uuid)
 ```
-It should return: 
-```
-Added 1 index, statement executed in 86 ms.
-```
 
 We can confirm the existence of the Indexes using `CALL db.indexes` which should return: 
 ```
+!!!
 ╒══════════════════════════════╤══════╤═══════════════════╕
 │description                   │state │type               │
 ╞══════════════════════════════╪══════╪═══════════════════╡
