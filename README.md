@@ -206,7 +206,7 @@ __Reminder: Make sure APOC is correctly installed as described [here](https://ne
 To check whether the Graph was populated successfully, we can run the __Cypher__ query: `MATCH (n) RETURN (n) LIMIT 200` which will only display the top 200 results. 
 
 The output can be visualized as follows:
-<img src="https://raw.githubusercontent.com/arjuntherajeev/neo4j_issuu_data_analysis/master/graph_image+large.svg?sanitize=true">
+<img src="https://raw.githubusercontent.com/arjuntherajeev/neo4j_issuu_data_analysis/master/graph_image_large.svg?sanitize=true">
 
 ## 5. Let's Query <a id="chapter-5"></a>
 
