@@ -82,7 +82,53 @@ As an example, if we consider a Visitor __Thomas__ and a Document __A Diary of J
 
 The Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
 
-## 3. Importing the JSON Data Set <a id="chapter-3"></a>
+## 3. Creating Indexes <a id="chapter-3"></a>
+
+The main goal of this exercise is to _query_ the Graph to derive _insights_ about the data set. One way to improve the efficiency of retrieval of data is by using the concept of __Indexes__. The idea behind an Index here is the same as in __Relational__ and __NoSQL__ databases.
+
+We can view existing Indexes in Neo4j using the query:
+```
+CALL db.indexes
+```
+It should return: 
+```
+(no rows)
+```
+
+In Neo4j, an Index can be created on a _single_ property of a Label, these are known as __Single-Property Indexes__. An Index can also be created on _multiple_ properties of a Label, these are known as __Composite Indexes__. 
+
+In our Graph, we have __2__ Labels: `Document` and `Visitor`. We will create __Single-Property Indexes__ on `Document` and `Visitor` as follows:
+
+For the `Document` Label, we would like to create an Index on the __property__ `doc_uuid` which is the unique identifier for each Document Node in the Graph. 
+```
+CREATE INDEX ON :Document(doc_uuid)
+```
+It should return: 
+```
+Added 1 index, statement executed in 135 ms.
+```
+For the `Visitor` Label, we would like to create an Index on the __property__ `visitor_uuid` which is the unique identifier for each Visitor Node in the Graph. 
+```
+CREATE INDEX ON :Visitor(visitor_uuid)
+```
+It should return: 
+```
+Added 1 index, statement executed in 86 ms.
+```
+
+We can confirm the existence of the Indexes using `CALL db.indexes` which should return: 
+```
+╒══════════════════════════════╤══════╤═══════════════════╕
+│description                   │state │type               │
+╞══════════════════════════════╪══════╪═══════════════════╡
+│INDEX ON :Document(doc_uuid)  │online│node_label_property│
+├──────────────────────────────┼──────┼───────────────────┤
+│INDEX ON :Visitor(visitor_uuid│online│node_label_property│
+│)                             │      │                   │
+└──────────────────────────────┴──────┴───────────────────┘
+```
+
+## 4. Importing the JSON Data Set <a id="chapter-4"></a>
 
 Let's now get our hands dirty! 
 
@@ -161,54 +207,6 @@ To check whether the Graph was populated successfully, we can run the __Cypher__
 
 The output can be visualized as follows:
 <img src="https://raw.githubusercontent.com/arjuntherajeev/neo4j_issuu_data_analysis/master/graph_image.svg?sanitize=true">
-
-## 4. Creating Indexes <a id="chapter-4"></a>
-
-Now that we have populated the Graph with Nodes and Relationships, it is time to think about retrieval! 
-
-The main idea is to _query_ the Graph to derive _insights_ about the data set. One way to improve the efficiency of retrieval of data is by using the concept of __Indexes__. The idea behind an Index here is the same as in __Relational__ and __NoSQL__ databases.
-
-We can view existing Indexes in Neo4j using the query:
-```
-CALL db.indexes
-```
-It should return: 
-```
-(no rows)
-```
-
-In Neo4j, an Index can be created on a _single_ property of a Label, these are known as __Single-Property Indexes__. An Index can also be created on _multiple_ properties of a Label, these are known as __Composite Indexes__. 
-
-In our Graph, we have __2__ Labels: `Document` and `Visitor`. We will create __Single-Property Indexes__ on `Document` and `Visitor` as follows:
-
-For the `Document` Label, we would like to create an Index on the __property__ `doc_uuid` which is the unique identifier for each Document Node in the Graph. 
-```
-CREATE INDEX ON :Document(doc_uuid)
-```
-It should return: 
-```
-Added 1 index, statement executed in 135 ms.
-```
-For the `Visitor` Label, we would like to create an Index on the __property__ `visitor_uuid` which is the unique identifier for each Visitor Node in the Graph. 
-```
-CREATE INDEX ON :Visitor(visitor_uuid)
-```
-It should return: 
-```
-Added 1 index, statement executed in 86 ms.
-```
-
-We can confirm the existence of the Indexes using `CALL db.indexes` which should return: 
-```
-╒══════════════════════════════╤══════╤═══════════════════╕
-│description                   │state │type               │
-╞══════════════════════════════╪══════╪═══════════════════╡
-│INDEX ON :Document(doc_uuid)  │online│node_label_property│
-├──────────────────────────────┼──────┼───────────────────┤
-│INDEX ON :Visitor(visitor_uuid│online│node_label_property│
-│)                             │      │                   │
-└──────────────────────────────┴──────┴───────────────────┘
-```
 
 ## 5. Let's Query <a id="chapter-5"></a>
 
