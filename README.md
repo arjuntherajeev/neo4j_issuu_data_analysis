@@ -167,12 +167,12 @@ Now that we have access to the values of _each_ entry, it is time to create the 
 
 If we execute the following statements (in order):
 ```
-CREATE (d:Document {id:1}) RETURN (d) 
-CREATE (d:Document {id:1}) RETURN (d)
+CREATE (d:Document {doc_uuid:1}) RETURN (d) 
+CREATE (d:Document {doc_uuid:1}) RETURN (d)
 ```
 This will result in __2 Nodes__ being created! A way to control this is by using `MERGE` which will create the Node __only__ if it does not exist. This can illustrated as follows:
 ```
-MERGE (d:Document {id:1}) RETURN (d)
+MERGE (d:Document {doc_uuid:1}) RETURN (d)
 ```
 
 This same principle can be applied for Relationships as well! 
