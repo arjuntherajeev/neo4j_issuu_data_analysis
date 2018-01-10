@@ -84,12 +84,11 @@ The Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and spec
 ## 3. Creating Constraints & Indexes <a id="chapter-3"></a>
 
 A __Constraint__ is a mechanism to control and ensure _data integrity_ in Neo4j. Constraints can be created on either Nodes or Relationships. There are basically three types of Constraints in Neo4j: 
+
 1. Unique Node Property Constraints - to ensure that the Graph contains only a single Node with a specific Label and Property value.
 2. Node Property Existence Constraints - to ensure that a certain Property of a specific Label exists within all Nodes in the Graph.  
 3. Relationship Property Existence Constraints - to ensure that a certain Property exists within all Relationships of a specific structure.  
 4. Node Keys - to ensure that, for a given Label and set of Properties, there exists all those Properties for that Label and that the combination of Property values is unique. Essentially, a combination of _existence_ and _uniqueness_.
-
-__Tip: More information about Constraints in Neo4j is available [here](http://neo4j.com/docs/developer-manual/current/cypher/schema/constraints/).__
 
 We will create __Unique Node Property Constraints__ for our Graph as follows: 
 
@@ -104,39 +103,23 @@ CREATE CONSTRAINT ON (v:Visitor) ASSERT v.visitor_uuid IS UNIQUE
 
 The main goal of this exercise is to _query_ the Graph to derive _insights_ about the data set. One way to improve the efficiency of retrieval of data is by using the concept of __Indexes__. The idea behind an Index here is the same as in __Relational__ and __NoSQL__ databases.
 
-We can view existing Indexes in Neo4j using the query:
+In Neo4j, an Index can be created on a _single_ property of a Label, these are known as __Single-Property Indexes__. An Index can also be created on _multiple_ properties of a Label, these are known as __Composite Indexes__. 
+
+It is important to understand that, by creating a __Unique Node Property Constraint__ on a Property, Neo4j will alo create a __Single-Property Index__ on that Property. Hence, in our situation, the Indexes will be created on the `doc_uuid` Property for the `Document` Label and on the `visitor_uuid` Property for the `Visitor` Label.
+
+Now that we created the Constraints, we can view existing Indexes in Neo4j using the query:
 ```
 CALL db.indexes
 ```
 It should return: 
 ```
-(no rows)
-```
-
-In Neo4j, an Index can be created on a _single_ property of a Label, these are known as __Single-Property Indexes__. An Index can also be created on _multiple_ properties of a Label, these are known as __Composite Indexes__. 
-
-In our Graph, we have __2__ Labels: `Document` and `Visitor`. We will create __Single-Property Indexes__ on `Document` and `Visitor` as follows:
-
-For the `Document` Label, we would like to create an Index on the __property__ `doc_uuid` which is the unique identifier for each Document Node in the Graph. 
-```
-CREATE INDEX ON :Document(doc_uuid)
-```
-For the `Visitor` Label, we would like to create an Index on the __property__ `visitor_uuid` which is the unique identifier for each Visitor Node in the Graph. 
-```
-CREATE INDEX ON :Visitor(visitor_uuid)
-```
-
-We can confirm the existence of the Indexes using `CALL db.indexes` which should return: 
-```
-!!!
-╒══════════════════════════════╤══════╤═══════════════════╕
-│description                   │state │type               │
-╞══════════════════════════════╪══════╪═══════════════════╡
-│INDEX ON :Document(doc_uuid)  │online│node_label_property│
-├──────────────────────────────┼──────┼───────────────────┤
-│INDEX ON :Visitor(visitor_uuid│online│node_label_property│
-│)                             │      │                   │
-└──────────────────────────────┴──────┴───────────────────┘
+╒═══════════════════════════════╤══════╤════════════════════╕
+│description                    │state │type                │
+╞═══════════════════════════════╪══════╪════════════════════╡
+│INDEX ON :Document(doc_uuid)   │online│node_unique_property│
+├───────────────────────────────┼──────┼────────────────────┤
+│INDEX ON :Visitor(visitor_uuid)│online│node_unique_property│
+└───────────────────────────────┴──────┴────────────────────┘
 ```
 
 ## 4. Importing the JSON Data Set <a id="chapter-4"></a>
