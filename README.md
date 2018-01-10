@@ -379,8 +379,8 @@ __Example 1: Document UUID = `130205102930-4a65860329964f3790e39d482ff86bc7`__
 ```
 MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
 WHERE d.doc_uuid = '130205102930-4a65860329964f3790e39d482ff86bc7'
-WITH collect(v) as visitor_col, d.doc_uuid as uuid
-UNWIND visitor_col as vis
+WITH collect(v) AS visitor_col, d.doc_uuid AS uuid
+UNWIND visitor_col AS vis
 MATCH (vis)-[:VIEWED]->(d1:Document)
 WHERE d1.doc_uuid <> uuid
 RETURN collect(DISTINCT vis.visitor_uuid) AS Visitors, (collect(DISTINCT d1.doc_uuid)) AS Recommendations
@@ -409,8 +409,8 @@ __Example 2: Document UUID = `130323125939-5f4318404cda4025a2463c66435ad7c8`__
 ```
 MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
 WHERE d.doc_uuid = '130323125939-5f4318404cda4025a2463c66435ad7c8'
-WITH collect(v) as visitor_col, d.doc_uuid as uuid
-UNWIND visitor_col as vis
+WITH collect(v) AS visitor_col, d.doc_uuid AS uuid
+UNWIND visitor_col AS vis
 MATCH (vis)-[:VIEWED]->(d1:Document)
 WHERE d1.doc_uuid <> uuid
 RETURN collect(DISTINCT vis.visitor_uuid) AS Visitors, (collect(DISTINCT d1.doc_uuid)) AS Recommendations
@@ -430,7 +430,12 @@ __Result:__
 └──────────────────────────────┴──────────────────────────────┘
 ```
 __Discussion:__
-This query
+
+This query aims to find documents _similar_ to a given document. First, we find the visitors for a particular document (using its __Document UUID__). This is amalgamated into a list using the `collect()` aggregate function. The `WITH` clause allows utilizing the result of `collect()` and referencing it using the identifier - `visitor_col`. Similarly, `d.doc_uuid` is made available as `uuid`. 
+
+Now, we use the `UNWIND` keyword to expand the collection into each __Visitor UUID__ which is used to perform _another_ `MATCH` operation with our existing Relationship. Next, we perform a comparison to ensure that `uuid` (the original Document UUID) is __NOT__ equal to the newly _matched_ Document UUID (represented as `d1.doc_uuid`). 
+
+Finally, we return a collection of __Visitor UUIDs__ and a collection of __Document UUIDs__. The elements of both these collections are _unique_. This is achieved using the `DISTINCT` operator. Thus, we end up with a list of unique visitors to the given document and a list of _recommended_ documents!
 
 ## Summary <a id="chapter-6"></a>
 
