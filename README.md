@@ -373,10 +373,66 @@ __Discussion:__
 
 This query utilizes the `collect()` aggregate function which groups multiple records into a _list_. An important consideration made here is the use of the `DISTINCT` operator to ensure that _duplicate_ values are omitted from the output. Finally, we display the _top 3_ using the `LIMIT 3` constraint. 
 
-### Query 5. Find the visitors for each document and display the top 3 in the _descending_ order of number of visitors.
+### Query 5. For a given document, find recommendations of other documents _like_ it. 
+
+__Example 1: Document UUID = `130205102930-4a65860329964f3790e39d482ff86bc7`__
 ```
-MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)
+MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
+WHERE d.doc_uuid = '130205102930-4a65860329964f3790e39d482ff86bc7'
+WITH collect(v) as visitor_col, d.doc_uuid as uuid
+UNWIND visitor_col as vis
+MATCH (vis)-[:VIEWED]->(d1:Document)
+WHERE d1.doc_uuid <> uuid
+RETURN uuid, collect(DISTINCT vis.visitor_uuid), (collect(DISTINCT d1.doc_uuid))
 ```
+__Result:__
+```
+╒══════════════════════════════╤══════════════════════════════╤══════════════════════════════╕
+│uuid                          │collect(DISTINCT vis.visitor_u│(collect(DISTINCT d1.doc_uuid)│
+│                              │uid)                          │)                             │
+╞══════════════════════════════╪══════════════════════════════╪══════════════════════════════╡
+│130205102930-4a65860329964f379│[4f9e21d836e90dcf]            │[131010151705-60d7ba5cbcd6a255│
+│0e39d482ff86bc7               │                              │652ca9d7a27f76d3, 140122153540│
+│                              │                              │-94ee7b54cb95f635349a63a82835e│
+│                              │                              │92b, 130205150342-921840826cfb│
+│                              │                              │4f988682db05aaa32d2e, 13020514│
+│                              │                              │4459-7a7448cd74dd45458feb1307d│
+│                              │                              │907fddb, 130226165227-be6ae627│
+│                              │                              │fd5f4be0b9a0705b43c7286a, 1305│
+│                              │                              │20152036-0fc36dda7e7546bdb9430│
+│                              │                              │26e50690814, 140121155329-9856│
+│                              │                              │0c64f9e276da0f0cf433fb50fa63, │
+│                              │                              │130416135921-659f9c05a9ea4ffc9│
+│                              │                              │3739ffd8a04908b]              │
+└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
+```
+__Example 2: Document UUID = `130323125939-5f4318404cda4025a2463c66435ad7c8`__
+```
+MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
+WHERE d.doc_uuid = '130323125939-5f4318404cda4025a2463c66435ad7c8'
+WITH collect(v) as visitor_col, d.doc_uuid as uuid
+UNWIND visitor_col as vis
+MATCH (vis)-[:VIEWED]->(d1:Document)
+WHERE d1.doc_uuid <> uuid
+RETURN uuid, collect(DISTINCT vis.visitor_uuid), (collect(DISTINCT d1.doc_uuid))
+```
+__Result:__
+```
+╒══════════════════════════════╤══════════════════════════════╤══════════════════════════════╕
+│uuid                          │collect(DISTINCT vis.visitor_u│(collect(DISTINCT d1.doc_uuid)│
+│                              │uid)                          │)                             │
+╞══════════════════════════════╪══════════════════════════════╪══════════════════════════════╡
+│130323125939-5f4318404cda4025a│[823babba91f61957, 6206d63a841│[130428213605-d16c4651f5624855│
+│2463c66435ad7c8               │bb27f, aaa4eaf77abab0b2, 8b82e│9b242f75ad4884f5, 130901012449│
+│                              │1a60343f2d5]                  │-98b43cc6fd8e4d1ccbcac441b9fb2│
+│                              │                              │8cd, 131204101549-619a95597b70│
+│                              │                              │2aed1369d851c891fd60, 13060917│
+│                              │                              │1715-7c9c218afa6cb11f91babc13f│
+│                              │                              │6c8394a]                      │
+└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
+```
+__Discussion:__
+This query
 
 ## Summary <a id="chapter-6"></a>
 
