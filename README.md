@@ -192,7 +192,7 @@ MERGE (visitor)-[:VIEWED{type:item.event_type}]->(document)
 
 If we run this query verbatim on Neo4j, the output should be (similar to):
 ```
-Added 2294 labels, created 2294 nodes, set 5752 properties, created 2171 relationships, statement executed in 12230 ms.
+Added 2293 labels, created 2293 nodes, set 5749 properties, created 2170 relationships, statement executed in 15523 ms.
 ```
 
 __Reminder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is to ensure that the `apoc.load.json` procedure is available for use!__
@@ -226,7 +226,7 @@ __Result:__
 ├───────┼─────┤
 │BR     │143  │
 ├───────┼─────┤
-│MX     │136  │
+│MX     │135  │
 ├───────┼─────┤
 │PE     │47   │
 ├───────┼─────┤
@@ -291,7 +291,7 @@ __Result:__
 ╞════════════╪═════╡
 │click       │1    │
 ├────────────┼─────┤
-│read        │63   │
+│read        │62   │
 ├────────────┼─────┤
 │pageread    │369  │
 ├────────────┼─────┤
