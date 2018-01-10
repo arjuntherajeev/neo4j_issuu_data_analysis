@@ -310,63 +310,63 @@ Hence, `ORDER BY count(d.doc_uuid) ASC` can also be written as `ORDER BY Count A
 ### Query 4. Find the visitors for each document and display the top 3 in the _descending_ order of number of visitors.
 ```
 MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)
-RETURN DISTINCT d.doc_uuid AS DocUUID, collect(DISTINCT v.visitor_uuid) AS Collect, count(DISTINCT v.visitor_uuid) AS Count
+RETURN DISTINCT d.doc_uuid AS DocUUID, collect(DISTINCT v.visitor_uuid) AS Visitors, count(DISTINCT v.visitor_uuid) AS Count
 ORDER BY Count DESC
 LIMIT 3
 ```
 __Result:__
 ```
 ╒══════════════════════════════╤══════════════════════════════╤═════╕
-│DocUUID                       │Collect                       │Count│
+│DocUUID                       │Visitors                      │Count│
 ╞══════════════════════════════╪══════════════════════════════╪═════╡
-│140224101516-e5c074c3404177518│[923f25aa749f67f6, 4f4bd7a35b2│26   │
-│bab9d7a65fb578e               │0bd1f, 19f5285fef7c1f00, f102d│     │
-│                              │9d4fc4bacdc, 3819fc022d225057,│     │
-│                              │ abefb3fe7784f8d3, e5d957682bc│     │
-│                              │8273b, 4d49271019c7ed96, 6b2d3│     │
-│                              │cca6c1f8595, 78e1a8af51d44194,│     │
-│                              │ b0ba142cdbf01b11, 0930437b533│     │
-│                              │a0031, d6b90f07f29781e0, 7bd81│     │
-│                              │3cddec2f1b7, e1bfcb29e0f3664a,│     │
-│                              │ 3db0cb8f357dcc71, 6d87bcdc5fa│     │
-│                              │5865a, 6170372b90397fb3, 3ec46│     │
-│                              │5aa8f36302b, 43dd7a8b2fafe059,│     │
-│                              │ 797846998c5624ca, ee14da6b126│     │
-│                              │3a51e, e3392e4a18d3370e, 23f8a│     │
-│                              │503291a948d, 502ddaaa898e57c4,│     │
-│                              │ 6fd040328d2ad46f]            │     │
+│140224101516-e5c074c3404177518│[4f4bd7a35b20bd1f, 78e1a8af51d│26   │
+│bab9d7a65fb578e               │44194, 4d49271019c7ed96, 6b2d3│     │
+│                              │cca6c1f8595, 19f5285fef7c1f00,│     │
+│                              │ 3819fc022d225057, f102d9d4fc4│     │
+│                              │bacdc, e5d957682bc8273b, abefb│     │
+│                              │3fe7784f8d3, 6170372b90397fb3,│     │
+│                              │ 797846998c5624ca, 43dd7a8b2fa│     │
+│                              │fe059, 3ec465aa8f36302b, d6b90│     │
+│                              │f07f29781e0, 7bd813cddec2f1b7,│     │
+│                              │ 3db0cb8f357dcc71, e1bfcb29e0f│     │
+│                              │3664a, 6d87bcdc5fa5865a, b0ba1│     │
+│                              │42cdbf01b11, 0930437b533a0031,│     │
+│                              │ e3392e4a18d3370e, ee14da6b126│     │
+│                              │3a51e, 502ddaaa898e57c4, 6fd04│     │
+│                              │0328d2ad46f, 23f8a503291a948d,│     │
+│                              │ 923f25aa749f67f6]            │     │
 ├──────────────────────────────┼──────────────────────────────┼─────┤
-│140228202800-6ef39a241f35301a9│[43b59d36985d8223, 355361a3510│25   │
-│a42cd0ed21e5fb0               │94143, 51fd872df55686a5, 4e2a7│     │
-│                              │5f30e6b4ce7, 6229cca3564cb1d1,│     │
-│                              │ 52873ed85700e41f, 2f63e0cca69│     │
-│                              │0da91, febc786c33113a8e, 47d26│     │
-│                              │08ec1f9127b, ca8079a4aaff28cb,│     │
-│                              │ e8fa4a9e63248deb, b6169f1bebb│     │
-│                              │be3ad, b3ded380cc8fdd24, 17db8│     │
-│                              │6d260543ddd, b2a24f14bb5c9ea3,│     │
-│                              │ fabc9339a406616d, 32563acf872│     │
-│                              │f5449, 280bd96790ade2d4, 2f21e│     │
-│                              │e71e0c6a2ce, 458999cbf4307f34,│     │
-│                              │ 55ac6c3ce6325228, 6d3b99b2041│     │
-│                              │af286, 36a12501ee94d15c, d2d6e│     │
-│                              │7d1a25ee0b0, 13ca53a93b1594bf]│     │
+│140228202800-6ef39a241f35301a9│[2f21ee71e0c6a2ce, 55ac6c3ce63│25   │
+│a42cd0ed21e5fb0               │25228, e8fa4a9e63248deb, b2a24│     │
+│                              │f14bb5c9ea3, d2d6e7d1a25ee0b0,│     │
+│                              │ 6229cca3564cb1d1, 13ca53a93b1│     │
+│                              │594bf, 47d2608ec1f9127b, 4e2a7│     │
+│                              │5f30e6b4ce7, 43b59d36985d8223,│     │
+│                              │ 355361a351094143, 51fd872df55│     │
+│                              │686a5, 2f63e0cca690da91, febc7│     │
+│                              │86c33113a8e, 52873ed85700e41f,│     │
+│                              │ ca8079a4aaff28cb, 17db86d2605│     │
+│                              │43ddd, b3ded380cc8fdd24, b6169│     │
+│                              │f1bebbbe3ad, 458999cbf4307f34,│     │
+│                              │ 280bd96790ade2d4, 32563acf872│     │
+│                              │f5449, fabc9339a406616d, 36a12│     │
+│                              │501ee94d15c, 6d3b99b2041af286]│     │
 ├──────────────────────────────┼──────────────────────────────┼─────┤
-│140228101942-d4c9bd33cc299cc53│[ba76461cdd66d337, fa3810e505f│24   │
-│d584ca1a4bf15d9               │4f792, d5ed3cfc4a454fe9, 2d415│     │
-│                              │36695cc4814, 67c698e88b4fbdcc,│     │
-│                              │ 78deb8ffdb03d406, ee42ba15ed8│     │
-│                              │618eb, 688eb0dcd6ad8c86, c97c3│     │
-│                              │83d774deae0, 9b2cb60327cb7736,│     │
-│                              │ 06d465bfb51b0736, a96854d2178│     │
-│                              │0c1f9, d1c98b02398e9677, 14355│     │
-│                              │42d699350d9, a8cf3c4f1449cc5d,│     │
-│                              │ b1cdbeca3a556b72, 08c069dc405│     │
-│                              │cad2e, 5b2baf0329663564, 0d477│     │
-│                              │95fb1ddba9d, 667283570b5cedfe,│     │
-│                              │ 6c661964d1d13c61, f5986e1cb02│     │
-│                              │378e4, 0e8ddc2d2a60e14f, 6823c│     │
-│                              │573efad29f6]                  │     │
+│140228101942-d4c9bd33cc299cc53│[b1cdbeca3a556b72, a8cf3c4f144│24   │
+│d584ca1a4bf15d9               │9cc5d, 1435542d699350d9, 06d46│     │
+│                              │5bfb51b0736, 2d41536695cc4814,│     │
+│                              │ a96854d21780c1f9, d1c98b02398│     │
+│                              │e9677, 78deb8ffdb03d406, 6c661│     │
+│                              │964d1d13c61, 0d47795fb1ddba9d,│     │
+│                              │ 667283570b5cedfe, 5b2baf03296│     │
+│                              │63564, 08c069dc405cad2e, 6823c│     │
+│                              │573efad29f6, 9b2cb60327cb7736,│     │
+│                              │ 0e8ddc2d2a60e14f, f5986e1cb02│     │
+│                              │378e4, fa3810e505f4f792, d5ed3│     │
+│                              │cfc4a454fe9, ba76461cdd66d337,│     │
+│                              │ ee42ba15ed8618eb, 688eb0dcd6a│     │
+│                              │d8c86, 67c698e88b4fbdcc, c97c3│     │
+│                              │83d774deae0]                  │     │
 └──────────────────────────────┴──────────────────────────────┴─────┘
 ```
 __Discussion:__
