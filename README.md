@@ -373,6 +373,11 @@ __Discussion:__
 
 This query utilizes the `collect()` aggregate function which groups multiple records into a _list_. An important consideration made here is the use of the `DISTINCT` operator to ensure that _duplicate_ values are omitted from the output. Finally, we display the _top 3_ using the `LIMIT 3` constraint. 
 
+### Query 5. Find the visitors for each document and display the top 3 in the _descending_ order of number of visitors.
+```
+MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)
+```
+
 ## Summary <a id="chapter-6"></a>
 
 There you go, ladies & gentlemen! 
