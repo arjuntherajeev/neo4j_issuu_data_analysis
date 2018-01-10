@@ -121,6 +121,7 @@ It should return:
 │INDEX ON :Visitor(visitor_uuid)│online│node_unique_property│
 └───────────────────────────────┴──────┴────────────────────┘
 ```
+__Tip: More information about Constraints and their effect on Indexes is elaborated [here](http://neo4j.com/docs/developer-manual/current/cypher/schema/constraints/).__
 
 ## 4. Importing the JSON Data Set <a id="chapter-4"></a>
 
