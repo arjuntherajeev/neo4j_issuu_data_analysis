@@ -433,7 +433,7 @@ __Discussion:__
 
 This query aims to find documents _similar_ to a given document. First, we find the visitors for a particular document (using its __Document UUID__). This is amalgamated into a list using the `collect()` aggregate function. The `WITH` clause allows utilizing the result of `collect()` and referencing it using the identifier - `visitor_col`. Similarly, `d.doc_uuid` is made available as `uuid`. 
 
-Now, we use the `UNWIND` keyword to expand the collection into each __Visitor UUID__ which is used to perform _another_ `MATCH` operation with our existing Relationship. Next, we perform a comparison to ensure that `uuid` (the original Document UUID) is __NOT__ equal to the newly _matched_ Document UUID (represented as `d1.doc_uuid`). 
+Now, we use the `UNWIND` keyword to expand the collection into each __Visitor UUID__ which is used to perform _another_ `MATCH` operation with our existing Relationship. Next, we perform a comparison to check that `uuid` (the original Document UUID) is __NOT__ equal to the newly _matched_ Document UUID (represented as `d1.doc_uuid`). The purpose of this comparison is to ensure that the original document is __NOT__ accidentally recommended!
 
 Finally, we return a collection of __Visitor UUIDs__ and a collection of __Document UUIDs__. The elements of both these collections are _unique_. This is achieved using the `DISTINCT` operator. Thus, we end up with a list of unique visitors to the given document and a list of _recommended_ documents!
 
