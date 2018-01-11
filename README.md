@@ -441,7 +441,7 @@ Finally, we return a collection of __Visitor UUIDs__ and a collection of __Docum
 
 There you go, ladies & gentlemen! 
 
-In this tutorial, we saw an example of performing Data Analysis using Neo4j. We examined the [__Issuu Research Dataset__](http://labs.issuu.com/dataset_spec.html) and elaborated on its structure, format and fields. Next, we formulated the _model/schema_ of our desired Graph by choosing appropriate Nodes, Relationships and Properties. Further, we created Constraints and Indexes in Neo4j to ensure uniqueness and improve the performance of _querying_. After this, we discussed how to import the raw `JSON` data set, parse it and populate our Graph by following the previously determined schema. Lastly, we saw some sample __Cypher__ queries which helped us derive insight from our vast data set! 
+In this tutorial, we saw an example of performing Data Analysis using Neo4j. We examined the Issuu Research Dataset and elaborated on its structure, format and fields. Next, we formulated the _model/schema_ of our desired Graph by choosing appropriate Nodes, Relationships and Properties. Further, we created Constraints and Indexes in Neo4j to ensure uniqueness and improve the performance of _querying_. After this, we discussed how to import the raw `JSON` data set, parse it and populate our Graph by following the previously determined schema. Lastly, we saw some sample __Cypher__ queries which helped us derive insight from our vast data set! 
 
 ## References <a id="chapter-7"></a>
 
