@@ -79,7 +79,7 @@ As an example, if we consider a Visitor __Thomas__ and a Document __A Diary of J
 + `pagereadtime`
 + `continuation_load`
 
-The Relationship can be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
+Hence, for the purpose of simplicity of this exercise, we will use a single Property on the Relationship called as `type`. The Relationship can now be illustrated as: Visitor __Thomas__ __viewed__ (_and specifically __downloaded___) Document __A Diary of Jane__. 
 
 ## 3. Creating Constraints & Indexes <a id="chapter-3"></a>
 
