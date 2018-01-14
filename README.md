@@ -17,8 +17,8 @@ I previously published a beginner's guide to Neo4j - [__Getting Started with Neo
 
 ## Getting Set Up 
 
-The first thing we need to do is to [download](https://neo4j.com/download/community-edition/) and [install](https://neo4j.com/docs/operations-manual/current/installation/) Neo4j. 
-We will use the Neo4j __Web Interface__ which provides a _user-friendly_ UI to visualise the Graph and run queries. The Web Interface can be accessed via any Web Browser on `localhost` or `127.0.0.1` on (default) port `7474`.
+The first thing we need to do is to [download](https://neo4j.com/download/) and [install](https://neo4j.com/docs/operations-manual/current/installation/) Neo4j. 
+We will use __Neo4j Desktop__ which provides a _user-friendly_ UI to visualise the Graph and run queries. 
 
 The next step is to acquire and understand the data set!
 
