@@ -166,7 +166,7 @@ WHERE NOT item.env_doc_id IS NULL
 
 Now that we have access to the values of _each_ entry, it is time to create the Nodes and Relationships. This is accomplished using the `MERGE` keyword in Neo4j. It is _crucial_ to know the difference between `CREATE` and `MERGE`. As an example: 
 
-If we execute the following statements (in order):
+If we execute the following statements sequentially (provided that the constraints were __NOT__ created):
 ```
 CREATE (d:Document {doc_uuid:1}) RETURN (d) 
 CREATE (d:Document {doc_uuid:1}) RETURN (d)
@@ -187,7 +187,7 @@ UNWIND value.items AS item
 WITH item
 WHERE NOT item.env_doc_id IS NULL
 MERGE (document:Document {doc_uuid:item.env_doc_id})
-MERGE (visitor:Visitor {visitor_uuid:item.visitor_uuid, visitor_country:item.visitor_country})
+MERGE (visitor:Visitor {visitor_uuid:item.visitor_uuid}) ON CREATE SET visitor.visitor_country = item.visitor_country
 MERGE (visitor)-[:VIEWED{type:item.event_type}]->(document)
 ```
 
@@ -195,8 +195,6 @@ If we run this query verbatim on Neo4j, the output should be (similar to):
 ```
 Added 2293 labels, created 2293 nodes, set 5749 properties, created 2170 relationships, statement executed in 15523 ms.
 ```
-
-__Reminder: Make sure APOC is correctly installed as described [here](https://neo4j.com/blog/intro-user-defined-procedures-apoc/). This is to ensure that the `apoc.load.json` procedure is available for use!__
 
 To check whether the Graph was populated successfully, we can run the __Cypher__ query: `MATCH (n) RETURN (n) LIMIT 200` which will only display the top 200 results. 
 
