@@ -135,7 +135,7 @@ On __Neo4j Desktop__, APOC can be installed with the click of a single button!
 
 To do this, open your __Project__ and click on the `Manage` button. Next, click on the `Plugins` tab. Under this tab, you will see the heading __APOC__ accompanied with its version and a description. Click on the `Install and Restart` button. Once __APOC__ is successully installed, you should see a label with the message `✓ Installed`.
 
-Here is a screenshot of a successful APOC install:
+Here is a screenshot of a successful __APOC__ installation:
 <img src="https://raw.githubusercontent.com/arjuntherajeev/neo4j_issuu_data_analysis/master/APOC_Install.png">
 
 __Tip: More information about user defined procedures and the APOC library (installation, usage, examples) is elaborated on a Neo4j blog article titled - [APOC: An Introduction to User-Defined Procedures and APOC](https://neo4j.com/blog/intro-user-defined-procedures-apoc/).__
