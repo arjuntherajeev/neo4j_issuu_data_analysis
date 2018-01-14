@@ -457,7 +457,7 @@ In this tutorial, we saw an example of performing Data Analysis using Neo4j. We 
 
 ## What's Next? <a id="chapter-8"></a>
 
-The possibilities are endless! If you enjoyed this tutorial, then you can try to derive insights using another data set of your choice! While we chose to construct a rather simple Graph, you can make it much more complex and detailed. Further to this, you can also explore and experiment with the various [APOC user defined procedures](https://neo4j-contrib.github.io/neo4j-apoc-procedures/) on the Graph! 
+The possibilities are endless! If you enjoyed this tutorial, then you can try to derive insights using another data set of your choice! While we chose to construct a rather simple Graph, you can make it much more complex and detailed. Further to this, you can also explore and experiment with the various [APOC user defined procedures](https://neo4j-contrib.github.io/neo4j-apoc-procedures/index33.html) on the Graph! 
 
 ## Note <a id="chapter-9"></a>
 
