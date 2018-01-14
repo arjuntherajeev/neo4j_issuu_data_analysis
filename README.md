@@ -131,6 +131,10 @@ Assuming that Neo4j is started (with an appropriate `Database Location` selected
 
 To accomplish this, we will use the concept of _user defined procedures_ in Neo4j. These procedures are specific functionalities which can be _re-used_ to manipulate the Graph. We will specifically use a procedure from the __APOC__ library which is a collection of 200+ commonly used procedures. 
 
+On __Neo4j Desktop__, APOC can be installed with the click of a single button!
+
+To do this, open your __Project__ and click on the `Manage` button. Next, click on the `Plugins` tab. Under this tab, you can see __APOC__. Click on the `Install and Restart` button. Once __APOC__ was successully installed, you should see a label with the text `✓ Installed`! 
+
 __Tip: More information about user defined procedures and the APOC library (installation, usage, examples) is elaborated on a Neo4j blog article titled - [APOC: An Introduction to User-Defined Procedures and APOC](https://neo4j.com/blog/intro-user-defined-procedures-apoc/).__
 
 We are interested in a specific procedure - `apoc.load.json` which will allow us to load data from a `JSON` document. This procedure will return a singular map if the result is a `JSON` object or a stream of maps if the result is an array. 
