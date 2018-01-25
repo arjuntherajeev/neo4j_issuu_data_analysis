@@ -380,59 +380,40 @@ This query utilizes the `collect()` aggregate function which groups multiple rec
 
 ### Query 5. For a given document, find recommendations of other documents _like_ it. 
 
-__Example 1: Document UUID = `130205102930-4a65860329964f3790e39d482ff86bc7`__
+__Example 1: Document UUID = `130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8`__
 ```
-MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
-WHERE d.doc_uuid = '130205102930-4a65860329964f3790e39d482ff86bc7'
-WITH collect(v) AS visitor_col, d.doc_uuid AS uuid
-UNWIND visitor_col AS vis
-MATCH (vis)-[:VIEWED]->(d1:Document)
-WHERE d1.doc_uuid <> uuid
-RETURN collect(DISTINCT vis.visitor_uuid) AS Visitors, (collect(DISTINCT d1.doc_uuid)) AS Recommendations
+MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
+WHERE d1<>d AND d.doc_uuid='130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8'
+RETURN d1 AS Recommendations, count(*) AS views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 05 else 0 end) as score
+ORDER BY score DESC
 ```
 __Result:__
 ```
-╒══════════════════╤══════════════════════════════╕
-│Visitors          │Recommendations               │
-╞══════════════════╪══════════════════════════════╡
-│[4f9e21d836e90dcf]│[131010151705-60d7ba5cbcd6a255│
-│                  │652ca9d7a27f76d3, 140122153540│
-│                  │-94ee7b54cb95f635349a63a82835e│
-│                  │92b, 130205150342-921840826cfb│
-│                  │4f988682db05aaa32d2e, 13020514│
-│                  │4459-7a7448cd74dd45458feb1307d│
-│                  │907fddb, 130226165227-be6ae627│
-│                  │fd5f4be0b9a0705b43c7286a, 1305│
-│                  │20152036-0fc36dda7e7546bdb9430│
-│                  │26e50690814, 140121155329-9856│
-│                  │0c64f9e276da0f0cf433fb50fa63, │
-│                  │130416135921-659f9c05a9ea4ffc9│
-│                  │3739ffd8a04908b]              │
-└──────────────────┴──────────────────────────────┘
+╒══════════════════════════════╤═════╤═════╕
+│Recommendations               │views│score│
+╞══════════════════════════════╪═════╪═════╡
+│{doc_uuid: 130810070956-4f21f4│12   │16   │
+│22b9c8a4ffd5f62fdadf1dbee8}   │     │     │
+└──────────────────────────────┴─────┴─────┘
 ```
-__Example 2: Document UUID = `130323125939-5f4318404cda4025a2463c66435ad7c8`__
+__Example 2: Document UUID = `120831070849-697c56ab376445eaadd13dbb8b6d34d0`__
 ```
-MATCH (d:Document)<-[:VIEWED]-(v:Visitor)
-WHERE d.doc_uuid = '130323125939-5f4318404cda4025a2463c66435ad7c8'
-WITH collect(v) AS visitor_col, d.doc_uuid AS uuid
-UNWIND visitor_col AS vis
-MATCH (vis)-[:VIEWED]->(d1:Document)
-WHERE d1.doc_uuid <> uuid
-RETURN collect(DISTINCT vis.visitor_uuid) AS Visitors, (collect(DISTINCT d1.doc_uuid)) AS Recommendations
+MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
+WHERE d1<>d AND d.doc_uuid='120831070849-697c56ab376445eaadd13dbb8b6d34d0'
+RETURN d1 AS Recommendations, count(*) AS views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 05 else 0 end) as score
+ORDER BY score DESC
 ```
 __Result:__
 ```
-╒══════════════════════════════╤══════════════════════════════╕
-│Visitors                      │Recommendations               │
-╞══════════════════════════════╪══════════════════════════════╡
-│[823babba91f61957, 6206d63a841│[130428213605-d16c4651f5624855│
-│bb27f, aaa4eaf77abab0b2, 8b82e│9b242f75ad4884f5, 130901012449│
-│1a60343f2d5]                  │-98b43cc6fd8e4d1ccbcac441b9fb2│
-│                              │8cd, 131204101549-619a95597b70│
-│                              │2aed1369d851c891fd60, 13060917│
-│                              │1715-7c9c218afa6cb11f91babc13f│
-│                              │6c8394a]                      │
-└──────────────────────────────┴──────────────────────────────┘
+╒══════════════════════════════╤═════╤═════╕
+│Recommendations               │views│score│
+╞══════════════════════════════╪═════╪═════╡
+│{doc_uuid: 130701025930-558b15│6    │6    │
+│0c485fc8928ff65b88a6f4503d}   │     │     │
+├──────────────────────────────┼─────┼─────┤
+│{doc_uuid: 120507012613-7006da│6    │6    │
+│2bc335425b93d347d2063dc373}   │     │     │
+└──────────────────────────────┴─────┴─────┘
 ```
 __Discussion:__
 
