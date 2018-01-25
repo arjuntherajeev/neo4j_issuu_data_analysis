@@ -384,7 +384,17 @@ __Example 1: Document UUID = `130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8`__
 ```
 MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
 WHERE d1<>d AND d.doc_uuid='130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8'
-RETURN d1 AS Recommendations, count(*) AS Views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
+RETURN d1 AS Recommendations, count(*) AS Views, 
+sum(
+CASE r1.type 
+  WHEN "impression" THEN 1 
+  WHEN "pageread" THEN 1.5 
+  WHEN "pagereadtime" THEN 1.5 
+  WHEN "read" THEN 2 
+  WHEN "click" THEN 0.5 
+  ELSE 0 
+END
+) as Score
 ORDER BY Score DESC
 ```
 __Result:__
@@ -400,7 +410,17 @@ __Example 2: Document UUID = `120831070849-697c56ab376445eaadd13dbb8b6d34d0`__
 ```
 MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
 WHERE d1<>d AND d.doc_uuid='120831070849-697c56ab376445eaadd13dbb8b6d34d0'
-RETURN d1 AS Recommendations, count(*) AS Views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
+RETURN d1 AS Recommendations, count(*) AS Views, 
+sum(
+CASE r1.type 
+  WHEN "impression" THEN 1 
+  WHEN "pageread" THEN 1.5 
+  WHEN "pagereadtime" THEN 1.5 
+  WHEN "read" THEN 2 
+  WHEN "click" THEN 0.5 
+  ELSE 0 
+END
+) as Score
 ORDER BY Score DESC
 ```
 __Result:__
@@ -427,9 +447,25 @@ Activity | Score
 `read` | 2
 `click` | 0.5
 
-Now, we use the `UNWIND` keyword to expand the collection into each __Visitor UUID__ which is used to perform _another_ `MATCH` operation with our existing Relationship. Next, we perform a comparison to check that `uuid` (the original Document UUID) is __NOT__ equal to the newly _matched_ Document UUID (represented as `d1.doc_uuid`). The purpose of this comparison is to ensure that the original document is __NOT__ accidentally recommended!
+```
+MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
+WHERE d1<>d AND d.doc_uuid='120831070849-697c56ab376445eaadd13dbb8b6d34d0'
+RETURN d1 AS Recommendations, count(*) AS Views, sum(CASE r1.type WHEN "impression" THEN 1 WHEN "pageread" THEN 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
+ORDER BY Score DESC
+```
+First, we perform a `MATCH` operation to capture the _1st degree_ and _2nd degree_ viewership of a Visitor Node along with the Document Nodes and Relationships. We ensure that 2 Documents Nodes are not the same by using the `<>` operator and also specify the initial __Document UUID__ for which we would like to find _related_ Documents.
 
-Finally, we return a collection of __Visitor UUIDs__ and a collection of __Document UUIDs__. The elements of both these collections are _unique_. This is achieved using the `DISTINCT` operator. Thus, we end up with a list of unique visitors to the given document and a list of _recommended_ documents!
+Next, we simply return the _recommended_ __Document UUIDs__, their overall viewership counts and their _score_. To calculate the score, we utilize the `CASE` expression which is then tallied using the `sum()` aggregate function. 
+
+The `CASE` expression has the following syntax: 
+```
+CASE <expression>
+ WHEN <value> THEN <result> //if value matches, then return result
+ [WHEN ...] //repeat until all values are handled
+ [ELSE <default>] //else return a default result
+END
+```
+Finally, we _sort_ the results in the _descending_ order of score using th `ORDER BY Score DESC` clause!
 
 ## Summary <a id="chapter-6"></a>
 
