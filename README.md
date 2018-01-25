@@ -384,13 +384,13 @@ __Example 1: Document UUID = `130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8`__
 ```
 MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
 WHERE d1<>d AND d.doc_uuid='130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8'
-RETURN d1 AS Recommendations, count(*) AS views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 05 else 0 end) as score
+RETURN d1 AS Recommendations, count(*) AS Views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
 ORDER BY score DESC
 ```
 __Result:__
 ```
 ╒══════════════════════════════╤═════╤═════╕
-│Recommendations               │views│score│
+│Recommendations               │Views│Score│
 ╞══════════════════════════════╪═════╪═════╡
 │{doc_uuid: 130810070956-4f21f4│12   │16   │
 │22b9c8a4ffd5f62fdadf1dbee8}   │     │     │
@@ -400,13 +400,13 @@ __Example 2: Document UUID = `120831070849-697c56ab376445eaadd13dbb8b6d34d0`__
 ```
 MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
 WHERE d1<>d AND d.doc_uuid='120831070849-697c56ab376445eaadd13dbb8b6d34d0'
-RETURN d1 AS Recommendations, count(*) AS views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 05 else 0 end) as score
+RETURN d1 AS Recommendations, count(*) AS Views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
 ORDER BY score DESC
 ```
 __Result:__
 ```
 ╒══════════════════════════════╤═════╤═════╕
-│Recommendations               │views│score│
+│Recommendations               │Views│Score│
 ╞══════════════════════════════╪═════╪═════╡
 │{doc_uuid: 130701025930-558b15│6    │6    │
 │0c485fc8928ff65b88a6f4503d}   │     │     │
@@ -417,7 +417,15 @@ __Result:__
 ```
 __Discussion:__
 
-This query aims to find documents _similar_ to a given document. First, we find the visitors for a particular document (using its __Document UUID__). This is amalgamated into a list using the `collect()` aggregate function. The `WITH` clause allows utilizing the result of `collect()` and referencing it using the identifier - `visitor_col`. Similarly, `d.doc_uuid` is made available as `uuid`. 
+This query aims to find documents _similar_ to a given document by assigning a _score_ based on the _type_ of viewership activity. 
+
+Activity | Score
+--- | ---
+`impression` | 1
+`pageread` | 1.5
+`pagereadtime` | 1.5
+`read` | 2
+`click` | 0.5
 
 Now, we use the `UNWIND` keyword to expand the collection into each __Visitor UUID__ which is used to perform _another_ `MATCH` operation with our existing Relationship. Next, we perform a comparison to check that `uuid` (the original Document UUID) is __NOT__ equal to the newly _matched_ Document UUID (represented as `d1.doc_uuid`). The purpose of this comparison is to ensure that the original document is __NOT__ accidentally recommended!
 
