@@ -385,7 +385,7 @@ __Example 1: Document UUID = `130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8`__
 MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
 WHERE d1<>d AND d.doc_uuid='130902223509-8fed6b88ae0937c1c43fb30cb9f87ad8'
 RETURN d1 AS Recommendations, count(*) AS Views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
-ORDER BY score DESC
+ORDER BY Score DESC
 ```
 __Result:__
 ```
@@ -401,7 +401,7 @@ __Example 2: Document UUID = `120831070849-697c56ab376445eaadd13dbb8b6d34d0`__
 MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
 WHERE d1<>d AND d.doc_uuid='120831070849-697c56ab376445eaadd13dbb8b6d34d0'
 RETURN d1 AS Recommendations, count(*) AS Views, sum(case r1.type when "impression" then 1 when "pageread" then 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
-ORDER BY score DESC
+ORDER BY Score DESC
 ```
 __Result:__
 ```
