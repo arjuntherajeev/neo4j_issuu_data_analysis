@@ -447,12 +447,6 @@ Activity | Score
 `read` | 2
 `click` | 0.5
 
-```
-MATCH (d:Document)<-[r:VIEWED]-(v:Visitor)-[r1:VIEWED]->(d1:Document) 
-WHERE d1<>d AND d.doc_uuid='120831070849-697c56ab376445eaadd13dbb8b6d34d0'
-RETURN d1 AS Recommendations, count(*) AS Views, sum(CASE r1.type WHEN "impression" THEN 1 WHEN "pageread" THEN 1.5 when "pagereadtime" then 1.5 when "read" then 2 when "click" then 0.5 else 0 end) as Score
-ORDER BY Score DESC
-```
 First, we perform a `MATCH` operation to capture the _1st degree_ and _2nd degree_ viewership of a Visitor Node along with the Document Nodes and Relationships. We ensure that 2 Documents Nodes are not the same by using the `<>` operator and also specify the initial __Document UUID__ for which we would like to find _related_ Documents.
 
 Next, we simply return the _recommended_ __Document UUIDs__, their overall viewership counts and their _score_. To calculate the score, we utilize the `CASE` expression which is then tallied using the `sum()` aggregate function. 
